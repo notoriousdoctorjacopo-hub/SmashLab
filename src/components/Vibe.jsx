@@ -12,12 +12,13 @@ const SHOTS = [
   { src: '/media/cheese.webp', alt: 'Primo piano del cheddar fuso tra le due polpette', cap: 'Il momento esatto in cui il cheddar decide di scappare.', cls: 'col-span-12 md:col-span-8', rot: -1.5, tape: 'right-16' },
 ]
 
+// Polaroids hug their photo: natural aspect ratio, no stretched card, no empty paper.
 function Shot({ s }) {
   return (
-    <figure className={`vibe-piece group relative ${s.cls}`} style={{ '--r': `${s.rot}deg` }}>
-      <div className="h-full rotate-[var(--r)] border-[6px] border-bone bg-bone shadow-[10px_10px_0_#FF1E2D] transition-transform duration-300 ease-back group-hover:-translate-y-2 group-hover:rotate-0">
-        <img src={s.src} alt={s.alt} loading="lazy" className="h-full max-h-[64vh] w-full object-cover" />
-        <figcaption className="bg-bone px-2 pb-1 pt-3 font-marker text-lg leading-tight text-black">{s.cap}</figcaption>
+    <figure className="vibe-piece group relative mb-12 break-inside-avoid md:mb-14" style={{ '--r': `${s.rot}deg` }}>
+      <div className="rotate-[var(--r)] border-[6px] border-bone bg-bone shadow-[10px_10px_0_#FF1E2D] transition-transform duration-300 ease-back group-hover:-translate-y-2 group-hover:rotate-0">
+        <img src={s.src} alt={s.alt} loading="lazy" className="block h-auto w-full" />
+        <figcaption className="bg-bone px-2 pb-1 pt-2 font-marker text-lg leading-tight text-black">{s.cap}</figcaption>
       </div>
       <span className={`absolute -top-3 ${s.tape} h-7 w-24 -rotate-6 bg-volt/85`} aria-hidden="true" />
     </figure>
@@ -97,7 +98,7 @@ export default function Vibe() {
           </p>
         </div>
 
-        <div className="mt-20 grid grid-cols-12 gap-x-8 gap-y-12 md:mt-24 md:auto-rows-[minmax(220px,auto)] md:gap-y-14">
+        <div className="mt-20 columns-1 gap-8 pt-4 md:mt-24 md:columns-3 md:gap-10">
           {SHOTS.map((s) => (
             <Shot key={s.src} s={s} />
           ))}
