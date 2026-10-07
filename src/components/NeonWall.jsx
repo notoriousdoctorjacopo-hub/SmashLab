@@ -60,7 +60,6 @@ const PASTE = [
 
 export default function NeonWall() {
   const root = useRef(null)
-  const flash = useRef(null)
   const mobile = useIsMobile()
   const pastes = PASTE.filter((p) => !mobile || p.m)
 
@@ -82,7 +81,6 @@ export default function NeonWall() {
           pin: true,
           scrub: 0.35, // follows the scroll tightly, with just enough smoothing to stay fluid
           anticipatePin: 1,
-          onLeave: () => gsap.fromTo(flash.current, { opacity: 0.95 }, { opacity: 0, duration: 0.35, ease: 'power2.out' }),
         },
       })
 
@@ -115,7 +113,7 @@ export default function NeonWall() {
       }
       tl.to('.wall-caption', { opacity: 1, y: 0, duration: 0.5, ease: 'back.out(1.7)' }, 6.4)
 
-      // 4. Glitch, flash, release.
+      // 4. Glitch, then release.
       tl.to('.sign', { x: -16, skewX: 14, duration: 0.07 }, 8.7)
         .to('.glitch-a', { opacity: 0.9, x: -14, duration: 0.07 }, 8.7)
         .to('.glitch-b', { opacity: 0.9, x: 14, duration: 0.07 }, 8.7)
@@ -124,8 +122,6 @@ export default function NeonWall() {
         .to('.sign', { x: -6, skewX: 4, scaleY: 1.12, duration: 0.07 }, 8.9)
         .to('.neon-on', { opacity: 0, duration: 0.05 }, 9.0)
         .to('.neon-on', { opacity: 1, duration: 0.05 }, 9.08)
-        .to(flash.current, { opacity: 1, duration: 0.12 }, 9.2)
-        .to(flash.current, { opacity: 0, duration: 0.3 }, 9.35)
         .to('.sign', { x: 0, skewX: 0, scaleY: 1, duration: 0.1 }, 9.35)
         .to(['.glitch-a', '.glitch-b'], { opacity: 0, x: 0, duration: 0.1 }, 9.35)
         .to('.paste', { x: 0, duration: 0.1 }, 9.35)
@@ -188,7 +184,6 @@ export default function NeonWall() {
           Corso a numero aperto. Esame finale: un Devastante intero, senza usare la salvietta.
         </p>
       </div>
-      <div ref={flash} className="pointer-events-none absolute inset-0 z-40 bg-white opacity-0 mix-blend-difference" aria-hidden="true" />
     </section>
   )
 }
